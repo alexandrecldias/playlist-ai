@@ -114,6 +114,9 @@ export default async function DashboardPage() {
                 <a href="/playlists/new" className="inline-flex items-center justify-center rounded-full bg-emerald-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-emerald-400">
                   Criar nova playlist
                 </a>
+                <a href="/playlists/add-tracks" className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10">
+                  Adicionar músicas em lote
+                </a>
                 <form method="post" action="/api/auth/logout">
                   <button type="submit" className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10">
                     Sair
@@ -122,7 +125,7 @@ export default async function DashboardPage() {
               </div>
             </div>
             <div className="rounded-3xl border border-white/10 bg-zinc-950/90 p-6 shadow-xl shadow-black/30">
-              <PlaylistList playlists={playlistsData} />
+              <PlaylistList playlists={playlistsData} currentUserId={profileData.id} />
             </div>
           </div>
         </div>

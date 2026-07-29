@@ -4,13 +4,13 @@ import EmptyState from "@/components/ui/EmptyState";
 import { COOKIE_NAMES, isTokenExpiring, fetchSpotifyProfile, fetchSpotifyPlaylistById, SpotifyApiError, SpotifyPlaylist, SpotifyProfile } from "@/lib/spotify";
 
 type PlaylistCreatedPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function PlaylistCreatedPage({ params }: PlaylistCreatedPageProps) {
-  const { id } = params;
+  const { id } = await params;
   const cookieStore = await cookies();
   const accessToken = cookieStore.get(COOKIE_NAMES.accessToken)?.value;
   const refreshToken = cookieStore.get(COOKIE_NAMES.refreshToken)?.value;

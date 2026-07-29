@@ -4,9 +4,10 @@ import PlaylistCard from "@/components/spotify/PlaylistCard";
 
 type PlaylistListProps = {
   playlists: SpotifyPlaylistItem[];
+  currentUserId?: string;
 };
 
-export default function PlaylistList({ playlists }: PlaylistListProps) {
+export default function PlaylistList({ playlists, currentUserId }: PlaylistListProps) {
   if (!playlists || playlists.length === 0) {
     return (
       <EmptyState
@@ -19,7 +20,7 @@ export default function PlaylistList({ playlists }: PlaylistListProps) {
   return (
     <div className="grid gap-4">
       {playlists.map((playlist) => (
-        <PlaylistCard key={playlist.id} playlist={playlist} />
+        <PlaylistCard key={playlist.id} playlist={playlist} canRemove={playlist.owner.id === currentUserId} />
       ))}
     </div>
   );

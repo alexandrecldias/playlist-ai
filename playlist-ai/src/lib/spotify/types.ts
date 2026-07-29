@@ -40,6 +40,7 @@ export type SpotifyPlaylistItem = {
   tracks?: PlaylistTracks;
   public?: boolean | null;
   external_urls?: SpotifyExternalUrls;
+  owner: SpotifyPlaylistOwner;
 };
 
 export type SpotifyPlaylistsResponse = {
@@ -63,10 +64,9 @@ export type SpotifyCreatedPlaylist = {
   id: string;
   name: string;
   description?: string | null;
-  public: boolean | null;
+  public?: boolean | null;
   external_urls?: SpotifyExternalUrls;
   images?: SpotifyImage[];
-  owner: SpotifyPlaylistOwner;
 };
 
 export type SpotifyPlaylist = {
@@ -78,5 +78,46 @@ export type SpotifyPlaylist = {
   images?: SpotifyImage[];
 };
 
-export type SpotifyApiErrorCode = "unauthorized" | "forbidden" | "rate_limited" | "other";
+export type SpotifyApiErrorCode =
+  | "unauthorized"
+  | "forbidden"
+  | "rate_limited"
+  | "invalid_playlist_id"
+  | "invalid_playlist_data"
+  | "not_found"
+  | "other";
+
+export type SpotifyTrack = {
+  id: string;
+  uri: string;
+  name: string;
+  artists: { name: string }[];
+  album: { name: string };
+  images?: { url: string }[];
+};
+
+export type SpotifySearchTracksResponse = {
+  tracks: {
+    items: SpotifyTrack[];
+  };
+};
+
+export type TrackSearchResult = {
+  input: string;
+  found: boolean;
+  track?: {
+    id: string;
+    uri: string;
+    name: string;
+    artists: string[];
+    albumName: string;
+    imageUrl?: string;
+  };
+};
+
+export type ParsedTrackInput = {
+  original: string;
+  title: string;
+  artist?: string;
+};
 

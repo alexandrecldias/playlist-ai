@@ -1,7 +1,9 @@
-﻿import { SpotifyPlaylistItem } from "@/lib/spotify";
+import RemovePlaylistButton from "@/components/spotify/RemovePlaylistButton";
+import { SpotifyPlaylistItem } from "@/lib/spotify";
 
 type PlaylistCardProps = {
   playlist: SpotifyPlaylistItem;
+  canRemove?: boolean;
 };
 
 function formatItemCount(total: number | undefined | null): string {
@@ -11,7 +13,7 @@ function formatItemCount(total: number | undefined | null): string {
   return "Quantidade indisponÃ­vel";
 }
 
-export default function PlaylistCard({ playlist }: PlaylistCardProps) {
+export default function PlaylistCard({ playlist, canRemove = false }: PlaylistCardProps) {
   const imageUrl = playlist.images?.[0]?.url;
   const itemCount = formatItemCount(playlist.tracks?.total ?? null);
   const visibility = playlist.public === true ? "PÃºblica" : playlist.public === false ? "Privada" : "Visibilidade desconhecida";
@@ -43,6 +45,7 @@ export default function PlaylistCard({ playlist }: PlaylistCardProps) {
               Abrir no Spotify
             </a>
           ) : null}
+          {canRemove ? <RemovePlaylistButton playlistId={playlist.id} playlistName={playlist.name} /> : null}
         </div>
       </div>
     </article>
