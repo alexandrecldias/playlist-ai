@@ -20,9 +20,6 @@ function formatItemCount(total: number | undefined | null): string {
 
 export default function PlaylistCard({ playlist, canRemove = false }: PlaylistCardProps) {
   const imageUrl = playlist.images?.[0]?.url;
-  console.log("========== PLAYLIST ==========");
-  console.log(playlist);
-  console.log(playlist.items?.total);
   const itemCount = formatItemCount(playlist.items?.total ?? null);
   const visibility = playlist.public === true ? "Pública" : playlist.public === false ? "Privada" : "Visibilidade desconhecida";
   const externalUrl = playlist.external_urls?.spotify;

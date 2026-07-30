@@ -4,5 +4,4 @@ export * from "./GeminiProvider";
 export * from "./config";
 export * from "./prompts";
 export * from "./parsers";
-export * from "./test";
 export * from "./types";

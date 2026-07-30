@@ -40,10 +40,6 @@ export class GeminiProvider implements AIProvider {
 
       const text = response.text?.trim();
 
-      console.log("========== GEMINI ==========");
-      console.log(text);
-      console.log("============================");
-
       if (!text) {
         throw new Error("Empty response from Gemini.");
       }

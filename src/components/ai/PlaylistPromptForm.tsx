@@ -1,8 +1,8 @@
 "use client";
 
 import { useActionState, useRef, useState, type KeyboardEvent, type RefObject } from "react";
-import { generateAiPlaylistAction } from "@/app/dev/ai/actions";
-import type { AiPlaygroundActionState } from "@/app/dev/ai/actions";
+import { generateAiPlaylistAction } from "@/app/playlist/ai/actions";
+import type { AiPlaygroundActionState } from "@/app/playlist/ai/actions";
 import EmptyState from "@/components/ui/EmptyState";
 import ErrorState from "./ErrorState";
 import LoadingState from "./LoadingState";

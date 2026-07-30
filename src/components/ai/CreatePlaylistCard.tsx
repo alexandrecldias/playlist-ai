@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
-import { createSpotifyPlaylistAction, type PlaylistCreationActionState } from "@/app/dev/ai/actions";
+import { createSpotifyPlaylistAction, type PlaylistCreationActionState } from "@/app/playlist/ai/actions";
 import type { ResolvedPlaylist } from "@/lib/resolver";
 import PlaylistCreationError from "./PlaylistCreationError";
 import PlaylistCreationSuccess from "./PlaylistCreationSuccess";
