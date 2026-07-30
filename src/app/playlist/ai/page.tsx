@@ -18,11 +18,12 @@ export default function AiPlaygroundPage() {
             </Link>
           </div>
 
-          <p className="text-sm uppercase tracking-[0.3em] text-emerald-400">Playground</p>
-          <h1 className="mt-3 text-3xl font-semibold sm:text-4xl">🎵 AI Playlist Playground</h1>
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-300 sm:text-base">
-            Descreva a playlist que deseja criar utilizando linguagem natural.
-          </p>
+          <div>
+            <h1 className="text-3xl font-semibold sm:text-4xl">🎵 Criar Playlist com IA</h1>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-300 sm:text-base">
+              Descreva a playlist que deseja criar utilizando linguagem natural. Nossa IA irá buscar as músicas no Spotify e criar a playlist para você.
+            </p>
+          </div>
 
           <div className="mt-8">
             <PlaylistPromptForm maxPromptChars={AI_CONFIG.maxPromptChars} />
