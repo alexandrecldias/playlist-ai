@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useState } from "react";
 import { createPlaylistAction } from "@/app/playlists/new/actions";
 
 type ActionValues = {
@@ -17,7 +16,7 @@ const initialValues: ActionValues = {
 };
 
 export default function CreatePlaylistForm() {
-  const [actionState, dispatch, isPending] = useFormState(createPlaylistAction, { status: "idle" } as const);
+  const [actionState, dispatch, isPending] = useActionState(createPlaylistAction, { status: "idle" } as const);
   const [values, setValues] = useState<ActionValues>(initialValues);
 
   const fieldErrors = actionState && actionState.status === "validation_error" ? actionState.fieldErrors : undefined;

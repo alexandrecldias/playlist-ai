@@ -1,4 +1,4 @@
-import { SpotifyTokenSuccess } from "@/lib/spotify/types";
+import type { SpotifyTokenSuccess } from "./types.ts";
 
 export const COOKIE_NAMES = {
   accessToken: "spotify_access_token",
@@ -62,4 +62,3 @@ export function clearTemporaryAuthCookiesOnResponse(writer: CookieWriter, isProd
   writer.set({ name: COOKIE_NAMES.authState, value: "", ...COOKIE_OPTIONS(isProd), maxAge: 0 });
   writer.set({ name: COOKIE_NAMES.codeVerifier, value: "", ...COOKIE_OPTIONS(isProd), maxAge: 0 });
 }
-

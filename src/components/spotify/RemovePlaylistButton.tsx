@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useActionState } from "react";
 import { useRouter } from "next/navigation";
-import { useFormState } from "react-dom";
 import { removePlaylistAction, type RemovePlaylistActionState } from "@/app/dashboard/actions";
 
 type RemovePlaylistButtonProps = {
@@ -15,7 +15,7 @@ const initialState: RemovePlaylistActionState = {
 };
 
 export default function RemovePlaylistButton({ playlistId, playlistName }: RemovePlaylistButtonProps) {
-  const [state, dispatch, isPending] = useFormState(removePlaylistAction, initialState);
+  const [state, dispatch, isPending] = useActionState(removePlaylistAction, initialState);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();

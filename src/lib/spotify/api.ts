@@ -1,16 +1,17 @@
-import { SPOTIFY_API_BASE } from "@/lib/spotify/constants";
-import {
+import { SPOTIFY_API_BASE } from "./constants.ts";
+import type {
   CreateSpotifyPlaylistInput,
   SpotifyApiErrorCode,
   SpotifyCreatedPlaylist,
   SpotifyPlaylist,
   SpotifyProfile,
   SpotifyPlaylistsResponse,
+  SpotifyTrack,
   TrackSearchResult,
   SpotifySearchTracksResponse,
   ParsedTrackInput,
-} from "@/lib/spotify/types";
-import { validateSpotifyPlaylistId } from "@/lib/spotify/validation";
+} from "./types.ts";
+import { validateSpotifyPlaylistId } from "./validation.ts";
 
 export class SpotifyApiError extends Error {
   code: SpotifyApiErrorCode;
@@ -401,6 +402,37 @@ export async function searchSpotifyTracks(
   }
 
   return results;
+}
+
+export async function searchSpotifyTrackCandidates(
+  accessToken: string,
+  title: string,
+  artist?: string,
+  limit = 10,
+): Promise<SpotifyTrack[]> {
+  const query = artist ? `track:${title} artist:${artist}` : `track:${title}`;
+  const url = new URL(`${SPOTIFY_API_BASE}/search`);
+  url.searchParams.set("q", query);
+  url.searchParams.set("type", "track");
+  url.searchParams.set("limit", String(limit));
+
+  const res = await fetch(url.toString(), {
+    headers: buildSpotifyHeaders(accessToken),
+    cache: "no-store",
+  });
+
+  if (res.status === 401) {
+    throw new SpotifyApiError("unauthorized", "unauthorized", 401);
+  }
+  if (res.status === 429) {
+    throw new SpotifyApiError("rate_limited", "rate_limited", 429, parseRetryAfter(res.headers.get("Retry-After")));
+  }
+  if (!res.ok) {
+    throw new SpotifyApiError("spotify_api_error", "other", res.status);
+  }
+
+  const data = (await res.json()) as SpotifySearchTracksResponse;
+  return data?.tracks?.items || [];
 }
 
 export async function addTracksToSpotifyPlaylist(

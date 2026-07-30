@@ -87,13 +87,29 @@ export type SpotifyApiErrorCode =
   | "not_found"
   | "other";
 
+export type PlaylistCreationResult = {
+  playlistId: string;
+  playlistUrl: string;
+  playlistName: string;
+  tracksAdded: number;
+  tracksIgnored: number;
+  success: boolean;
+};
+
 export type SpotifyTrack = {
   id: string;
   uri: string;
   name: string;
   artists: { name: string }[];
-  album: { name: string };
+  album: {
+    name: string;
+    images?: { url: string }[];
+  };
   images?: { url: string }[];
+  preview_url?: string | null;
+  duration_ms?: number;
+  popularity?: number;
+  external_urls?: SpotifyExternalUrls;
 };
 
 export type SpotifySearchTracksResponse = {
@@ -120,4 +136,3 @@ export type ParsedTrackInput = {
   title: string;
   artist?: string;
 };
-

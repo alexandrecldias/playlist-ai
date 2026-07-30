@@ -1,6 +1,6 @@
 ﻿import { randomBytes, createHash } from "crypto";
-import { SPOTIFY_TOKEN_URL } from "@/lib/spotify/constants";
-import { SpotifyTokenError, SpotifyTokenSuccess } from "@/lib/spotify/types";
+import { SPOTIFY_TOKEN_URL } from "./constants.ts";
+import type { SpotifyTokenError, SpotifyTokenSuccess } from "./types.ts";
 
 export function generateCodeVerifier(): string {
   return base64UrlEncode(randomBytes(64));
@@ -155,4 +155,3 @@ export async function getSpotifyAccessToken(
     tokenData,
   };
 }
-
