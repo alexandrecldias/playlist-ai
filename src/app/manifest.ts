@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     id: "/",
     name: "PlaylistAI",
     short_name: "PlaylistAI",
-    description: "Gerencie suas playlists do Spotify de forma inteligente",
+    description: "Crie playlists inteligentes usando Inteligência Artificial e Spotify.",
     start_url: "/",
     scope: "/",
     display: "standalone",

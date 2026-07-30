@@ -1,7 +1,17 @@
-﻿import { cookies } from "next/headers";
+import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { COOKIE_NAMES, isTokenExpiring } from "@/lib/spotify";
 import CreatePlaylistForm from "@/components/spotify/CreatePlaylistForm";
+
+export const metadata: Metadata = {
+  title: "Criar nova playlist",
+  description: "Crie uma nova playlist vazia no Spotify.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function NewPlaylistPage() {
   const cookieStore = await cookies();
@@ -44,4 +54,3 @@ export default async function NewPlaylistPage() {
     </div>
   );
 }
-

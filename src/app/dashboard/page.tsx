@@ -1,10 +1,20 @@
-﻿import { cookies } from "next/headers";
+import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import SpotifyProfile from "@/components/spotify/SpotifyProfile";
 import PlaylistList from "@/components/spotify/PlaylistList";
 import EmptyState from "@/components/ui/EmptyState";
 import { COOKIE_NAMES, isTokenExpiring, fetchSpotifyProfile, fetchSpotifyPlaylists, SpotifyApiError } from "@/lib/spotify";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Acesse suas playlists, crie novas playlists e gerencie sua conta Spotify.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -140,5 +150,4 @@ export default async function DashboardPage() {
     </div>
   );
 }
-
 

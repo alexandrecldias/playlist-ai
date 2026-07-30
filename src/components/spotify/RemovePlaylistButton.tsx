@@ -38,13 +38,8 @@ export default function RemovePlaylistButton({ playlistId, playlistName }: Remov
   };
 
   const openDialog = () => {
-    console.info("[RemovePlaylistButton] trigger clicked", {
-      hasDialog: Boolean(dialogRef.current),
-    });
-
     const dialog = dialogRef.current;
     if (!dialog) {
-      console.error("[RemovePlaylistButton] dialog ref unavailable");
       return;
     }
 
@@ -54,11 +49,8 @@ export default function RemovePlaylistButton({ playlistId, playlistName }: Remov
 
     try {
       dialog.showModal();
-    } catch (error) {
-      console.error("[RemovePlaylistButton] showModal failed", {
-        errorName: error instanceof Error ? error.name : "UnknownError",
-        errorMessage: error instanceof Error ? error.message.slice(0, 200) : undefined,
-      });
+    } catch {
+      dialog.setAttribute("open", "");
     }
   };
 

@@ -1,6 +1,9 @@
 ﻿import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/site/Footer";
+
+const baseUrl = new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000");
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,10 +23,17 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "PlaylistAI",
-  description: "Gerencie suas playlists do Spotify de forma inteligente",
+  metadataBase: baseUrl,
+  title: {
+    default: "PlaylistAI",
+    template: "%s | PlaylistAI",
+  },
+  description: "Crie playlists inteligentes usando Inteligência Artificial e Spotify.",
   manifest: "/manifest.json",
   applicationName: "PlaylistAI",
+  alternates: {
+    canonical: "/",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -35,8 +45,9 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon.ico",
+        url: "/favicon.svg",
         sizes: "any",
+        type: "image/svg+xml",
       },
       {
         url: "/icon-192.png",
@@ -57,6 +68,31 @@ export const metadata: Metadata = {
       },
     ],
   },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "PlaylistAI",
+    title: "PlaylistAI",
+    description: "Crie playlists inteligentes usando Inteligência Artificial e Spotify.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "PlaylistAI",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PlaylistAI",
+    description: "Crie playlists inteligentes usando Inteligência Artificial e Spotify.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -75,8 +111,10 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="PlaylistAI" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col bg-[#081012] text-white">
+        <div className="flex-1">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }
-

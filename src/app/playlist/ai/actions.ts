@@ -16,7 +16,7 @@ import {
 } from "@/lib/spotify";
 import type { PlaylistCreationRequest } from "./types";
 
-export type AiPlaygroundActionState =
+export type AiPlaylistActionState =
   | {
       status: "idle";
     }
@@ -66,9 +66,9 @@ function buildPromptTooLongMessage(): string {
 }
 
 export async function generateAiPlaylistAction(
-  _currentState: AiPlaygroundActionState,
+  _currentState: AiPlaylistActionState,
   formData: FormData,
-): Promise<AiPlaygroundActionState> {
+): Promise<AiPlaylistActionState> {
   const rawPrompt = formData.get("prompt");
   const prompt = typeof rawPrompt === "string" ? normalizePrompt(rawPrompt) : "";
 
@@ -303,12 +303,6 @@ async function createPlaylistWithTracks(
   isProd: boolean,
   refreshToken?: string,
 ): Promise<PlaylistCreationResult> {
-  console.info("[Playlist] Creating playlist", {
-    playlistName: request.name,
-    trackCount: trackUris.length,
-    ignoredCount: request.playlist.tracks.length - trackUris.length,
-  });
-
   let createdPlaylist: Awaited<ReturnType<typeof createSpotifyPlaylist>>;
   try {
     createdPlaylist = await createSpotifyPlaylist(accessToken, {
@@ -349,16 +343,7 @@ async function createPlaylistWithTracks(
     }
   }
 
-  console.info("[Playlist] Playlist created", {
-    playlistId: createdPlaylist.id,
-  });
-
   try {
-    console.info("[Playlist] Adding tracks", {
-      playlistId: createdPlaylist.id,
-      trackCount: trackUris.length,
-    });
-
     await addTracksToSpotifyPlaylist(accessToken, createdPlaylist.id, trackUris);
   } catch (error: unknown) {
     if (error instanceof SpotifyApiError && error.status === 401 && refreshToken) {
@@ -390,14 +375,6 @@ async function createPlaylistWithTracks(
       throw error;
     }
   }
-
-  console.info("[Playlist] Tracks added", {
-    playlistId: createdPlaylist.id,
-    trackCount: trackUris.length,
-  });
-  console.info("[Playlist] Finished", {
-    playlistId: createdPlaylist.id,
-  });
 
   const playlistUrl = createdPlaylist.external_urls?.spotify ?? `https://open.spotify.com/playlist/${createdPlaylist.id}`;
 
