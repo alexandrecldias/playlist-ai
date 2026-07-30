@@ -65,13 +65,13 @@ function validateValues(values: ActionValues) {
   const fieldErrors: { name?: string; description?: string } = {};
 
   if (!values.name || values.name.length === 0) {
-    fieldErrors.name = "O nome da playlist Ã© obrigatÃ³rio.";
+    fieldErrors.name = "O nome da playlist é obrigatório.";
   } else if (values.name.length > 100) {
-    fieldErrors.name = "O nome da playlist nÃ£o pode ultrapassar 100 caracteres.";
+    fieldErrors.name = "O nome da playlist não pode ultrapassar 100 caracteres.";
   }
 
   if (values.description.length > 300) {
-    fieldErrors.description = "A descriÃ§Ã£o nÃ£o pode ultrapassar 300 caracteres.";
+    fieldErrors.description = "A descrição não pode ultrapassar 300 caracteres.";
   }
 
   return fieldErrors;
@@ -120,7 +120,7 @@ export async function createPlaylistAction(
     clearAuthCookiesOnResponse(cookieStore, isProd);
     return {
       status: "api_error",
-      message: "Sua sessÃ£o expirou. Saia e entre novamente.",
+      message: "Sua sessão expirou. Saia e entre novamente.",
       values,
     };
   }
