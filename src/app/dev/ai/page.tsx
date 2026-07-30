@@ -1,12 +1,8 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import { AI_CONFIG } from "@/lib/ai";
 import PlaylistPromptForm from "@/components/ai/PlaylistPromptForm";
 
 export default function AiPlaygroundPage() {
-  if (process.env.NODE_ENV === "production") {
-    notFound();
-  }
 
   return (
     <div className="min-h-screen bg-[#081012] px-4 py-10 text-white sm:px-6">
