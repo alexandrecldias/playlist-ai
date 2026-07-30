@@ -7,6 +7,10 @@ import AddTracksForm from "@/components/spotify/AddTracksForm";
 export const metadata = {
   title: "Adicionar Músicas em Lote - PlaylistAI",
   description: "Adicione múltiplas músicas à sua playlist do Spotify",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function AddTracksPage() {

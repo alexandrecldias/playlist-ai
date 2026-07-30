@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { CreateSpotifyPlaylistInput, SpotifyApiError, isTokenExpiring } from "@/lib/spotify";
+import { CreateSpotifyPlaylistInput, SpotifyApiError } from "@/lib/spotify";
 import { COOKIE_NAMES, clearAuthCookiesOnResponse, setAuthTokenCookies } from "@/lib/spotify/cookies";
 import { createSpotifyPlaylist } from "@/lib/spotify/api";
 import { getSpotifyAccessToken } from "@/lib/spotify/auth";
@@ -99,19 +99,6 @@ export async function createPlaylistAction(
   const expiresAtMs = expiresAt ? Number(expiresAt) : undefined;
   const isProd = process.env.NODE_ENV === "production";
 
-  // Diagnostic: authentication presence and expiry
-  const tokenConsideredExpired = isTokenExpiring(expiresAtMs);
-  try {
-    console.info("[createPlaylistAction] authentication", {
-      hasAccessToken: Boolean(accessToken),
-      hasRefreshToken: Boolean(refreshToken),
-      hasExpiresAt: Boolean(expiresAt),
-      tokenConsideredExpired,
-    });
-  } catch {
-    /* ignore */
-  }
-
   let tokenResult;
   try {
     tokenResult = await getSpotifyAccessToken(accessToken, refreshToken, expiresAtMs);
@@ -135,30 +122,15 @@ export async function createPlaylistAction(
     public: values.visibility === "public",
   };
 
-  let attempts = 0;
   let currentAccessToken = tokenResult.accessToken;
   let currentRefreshToken = tokenResult.refreshToken;
-
-  let refreshAttempted = false;
   let createdPlaylist: { id: string } | undefined;
-  while (attempts < 2) {
+  for (let attempts = 0; attempts < 2; attempts += 1) {
     try {
-      const attemptNumber = attempts + 1;
-      try {
-        console.info("[createPlaylistAction] create attempt", {
-          attempt: attemptNumber,
-          visibility: playlistInput.public ? "public" : "private",
-        });
-      } catch {}
-
       createdPlaylist = await createSpotifyPlaylist(currentAccessToken, playlistInput);
       break;
     } catch (error) {
-      attempts += 1;
-      const creationAttempt = attempts;
-
-      if (error instanceof SpotifyApiError && error.code === "unauthorized" && attempts === 1) {
-        refreshAttempted = true;
+      if (error instanceof SpotifyApiError && error.code === "unauthorized" && attempts === 0) {
         if (!currentRefreshToken) {
           clearAuthCookiesOnResponse(cookieStore, isProd);
           return {
@@ -183,8 +155,6 @@ export async function createPlaylistAction(
               errorName: refreshErr instanceof Error ? refreshErr.name : "UnknownError",
               errorCode: refreshErr instanceof SpotifyApiError ? refreshErr.code : undefined,
               errorStatus: refreshErr instanceof SpotifyApiError ? refreshErr.status : undefined,
-              refreshAttempted,
-              creationAttempt,
               errorMessage:
                 process.env.NODE_ENV === "development" && refreshErr instanceof Error
                   ? refreshErr.message.slice(0, 300)
@@ -209,8 +179,6 @@ export async function createPlaylistAction(
           errorName: error instanceof Error ? error.name : "UnknownError",
           errorCode: error instanceof SpotifyApiError ? error.code : undefined,
           errorStatus: error instanceof SpotifyApiError ? error.status : undefined,
-          refreshAttempted,
-          creationAttempt,
           errorMessage:
             process.env.NODE_ENV === "development" && error instanceof Error
               ? error.message.slice(0, 300)

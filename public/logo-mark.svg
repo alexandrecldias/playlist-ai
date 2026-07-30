@@ -1,0 +1,11 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PlaylistAI">
+  <rect x="48" y="48" width="416" height="416" rx="120" fill="#081012"/>
+  <rect x="104" y="104" width="304" height="304" rx="88" fill="#0F1E1A" stroke="#1DB954" stroke-width="12"/>
+  <rect x="162" y="190" width="28" height="132" rx="14" fill="#1DB954"/>
+  <rect x="234" y="156" width="28" height="166" rx="14" fill="#7CF2A1"/>
+  <rect x="306" y="204" width="28" height="118" rx="14" fill="#1DB954"/>
+  <path d="M182 344C214 330 234 304 252 260C268 222 286 200 320 188" stroke="#E8FFF0" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="338" cy="182" r="16" fill="#E8FFF0"/>
+  <path d="M386 130L392 146L408 152L392 158L386 174L380 158L364 152L380 146L386 130Z" fill="#7CF2A1"/>
+  <path d="M124 366L128 376L138 380L128 384L124 394L120 384L110 380L120 376L124 366Z" fill="#1DB954" opacity="0.9"/>
+</svg>

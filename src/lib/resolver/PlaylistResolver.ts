@@ -18,21 +18,8 @@ export class PlaylistResolver {
   }
 
   async resolvePlaylist(response: GeneratePlaylistResponse): Promise<ResolvedPlaylist> {
-    logResolver("Starting resolution", { totalSongs: response.songs.length });
-
     const resolvedTracks = await Promise.all(response.songs.map((song) => this.resolveTrack(song)));
-    const summary = buildSummary(resolvedTracks);
-
-    logResolver("Finished", {
-      total: summary.total,
-      foundCount: summary.foundCount,
-      notFoundCount: summary.notFoundCount,
-      multipleMatchesCount: summary.multipleMatchesCount,
-      errorCount: summary.errorCount,
-      successRate: summary.successRate,
-    });
-
-    return summary;
+    return buildSummary(resolvedTracks);
   }
 
   private resolveTrack(song: SuggestedSong): Promise<ResolvedTrack> {
@@ -52,21 +39,13 @@ export class PlaylistResolver {
   }
 
   private async resolveTrackInternal(song: SuggestedSong): Promise<ResolvedTrack> {
-    logResolver("Searching", { title: song.title, artist: song.artist });
-
     const candidates = await this.searchTracks(this.accessToken, song.title, song.artist);
     const resolved = selectBestTrack(song, candidates);
 
     if (resolved.status === "NOT_FOUND") {
-      logResolver("Not Found", { title: song.title, artist: song.artist });
       return resolved;
     }
 
-    if (resolved.multipleMatches) {
-      logResolver("Multiple matches", { title: song.title, artist: song.artist, candidates: candidates.length });
-    }
-
-    logResolver("Found", { title: song.title, artist: song.artist });
     return resolved;
   }
 }
@@ -136,15 +115,6 @@ function buildCacheKey(title: string, artist: string): string {
 
 function normalize(value: string): string {
   return value.trim().toLowerCase().replace(/\s+/g, " ");
-}
-
-function logResolver(message: string, details?: Record<string, unknown>): void {
-  if (details) {
-    console.info(`[Resolver] ${message}`, details);
-    return;
-  }
-
-  console.info(`[Resolver] ${message}`);
 }
 
 function logResolverError(message: string, song: SuggestedSong, error: unknown): void {

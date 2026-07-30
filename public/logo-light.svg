@@ -1,0 +1,17 @@
+<svg width="960" height="256" viewBox="0 0 960 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PlaylistAI">
+  <rect width="960" height="256" rx="48" fill="transparent"/>
+  <g transform="translate(24 24)">
+    <rect x="0" y="0" width="208" height="208" rx="64" fill="#E8FFF0"/>
+    <rect x="30" y="30" width="148" height="148" rx="44" fill="#FFFFFF" stroke="#1DB954" stroke-width="8"/>
+    <rect x="58" y="72" width="14" height="68" rx="7" fill="#1DB954"/>
+    <rect x="94" y="54" width="14" height="86" rx="7" fill="#0F172A"/>
+    <rect x="130" y="80" width="14" height="60" rx="7" fill="#1DB954"/>
+    <path d="M66 166C82 158 94 144 102 124C110 106 118 96 136 90" stroke="#0F172A" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="148" cy="84" r="8" fill="#0F172A"/>
+    <path d="M168 42L171 50L179 53L171 56L168 64L165 56L157 53L165 50L168 42Z" fill="#1DB954"/>
+  </g>
+  <g transform="translate(280 66)">
+    <text x="0" y="66" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="800" fill="#0F172A">PlaylistAI</text>
+    <text x="2" y="114" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="500" fill="#475569">IA + Spotify + playlists inteligentes</text>
+  </g>
+</svg>
