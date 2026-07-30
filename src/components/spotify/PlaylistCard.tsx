@@ -7,16 +7,24 @@ type PlaylistCardProps = {
 };
 
 function formatItemCount(total: number | undefined | null): string {
-  if (typeof total === "number" && Number.isFinite(total) && total >= 0) {
-    return total === 1 ? "1 item" : `${total} itens`;
+  // Converter string para número, se necessário
+  const numValue = typeof total === "string" ? Number.parseInt(total, 10) : total;
+  
+  // Validar se é um número válido e não negativo
+  if (typeof numValue === "number" && Number.isFinite(numValue) && numValue >= 0) {
+    return numValue === 1 ? "1 item" : `${numValue} itens`;
   }
-  return "Quantidade indisponÃ­vel";
+  
+  return "Quantidade indisponível";
 }
 
 export default function PlaylistCard({ playlist, canRemove = false }: PlaylistCardProps) {
   const imageUrl = playlist.images?.[0]?.url;
-  const itemCount = formatItemCount(playlist.tracks?.total ?? null);
-  const visibility = playlist.public === true ? "PÃºblica" : playlist.public === false ? "Privada" : "Visibilidade desconhecida";
+  console.log("========== PLAYLIST ==========");
+  console.log(playlist);
+  console.log(playlist.items?.total);
+  const itemCount = formatItemCount(playlist.items?.total ?? null);
+  const visibility = playlist.public === true ? "Pública" : playlist.public === false ? "Privada" : "Visibilidade desconhecida";
   const externalUrl = playlist.external_urls?.spotify;
 
   return (
@@ -31,7 +39,7 @@ export default function PlaylistCard({ playlist, canRemove = false }: PlaylistCa
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 className="text-lg font-semibold text-white">{playlist.name}</h3>
-            <p className="mt-1 max-h-12 overflow-hidden text-sm text-zinc-400">{playlist.description ?? "Sem descriÃ§Ã£o."}</p>
+            <p className="mt-1 max-h-12 overflow-hidden text-sm text-zinc-400">{playlist.description ?? "Sem descrição."}</p>
           </div>
           <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-emerald-300">
             {visibility}

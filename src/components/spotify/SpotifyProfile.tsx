@@ -6,7 +6,7 @@ type SpotifyProfileProps = {
 
 export default function SpotifyProfile({ profile }: SpotifyProfileProps) {
   const imageUrl = profile.images?.[0]?.url;
-  const name = profile.display_name ?? "UsuÃ¡rio Spotify";
+  const name = profile.display_name ?? "Usuário Spotify";
   const profileUrl = profile.external_urls?.spotify;
 
   return (
