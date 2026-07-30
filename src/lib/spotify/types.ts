@@ -37,7 +37,7 @@ export type SpotifyPlaylistItem = {
   name: string;
   description?: string | null;
   images?: { url: string }[];
-  tracks?: PlaylistTracks;
+  items?: PlaylistTracks;
   public?: boolean | null;
   external_urls?: SpotifyExternalUrls;
   owner: SpotifyPlaylistOwner;
