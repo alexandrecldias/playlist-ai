@@ -1,4 +1,5 @@
 ﻿import { cookies } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import SpotifyProfile from "@/components/spotify/SpotifyProfile";
 import PlaylistList from "@/components/spotify/PlaylistList";
@@ -117,6 +118,12 @@ export default async function DashboardPage() {
                 <a href="/playlists/add-tracks" className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10">
                   Adicionar músicas em lote
                 </a>
+                <Link
+                  href="/dev/ai"
+                  className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-emerald-400/40 hover:bg-emerald-500/10 hover:text-emerald-300"
+                >
+                  Playlist com IA
+                </Link>
                 <form method="post" action="/api/auth/logout">
                   <button type="submit" className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10">
                     Sair
@@ -133,6 +140,5 @@ export default async function DashboardPage() {
     </div>
   );
 }
-
 
 
